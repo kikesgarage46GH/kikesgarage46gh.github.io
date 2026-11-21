@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Kike's Garage · Activá tu cuenta</title>
+<style>
+  :root { --verde: #39E04F; --fondo: #000; --caja: #111; --borde: #1f3a22; --texto: #fff; --suave: #b9c2b9; --error: #ff5a5a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+         background: radial-gradient(circle at 50% 0%, #0d2410 0%, #000 60%); color: var(--texto);
+         font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; padding: 24px 16px; }
+  .caja { width: 100%; max-width: 420px; background: var(--caja); border: 1px solid var(--borde);
+          border-radius: 20px; padding: 28px 22px; text-align: center; }
+  .marca { font-weight: 900; font-style: italic; font-size: 22px; margin: 0; }
+  .sub { color: var(--verde); font-size: 10px; letter-spacing: 4px; font-weight: 700; margin: 2px 0 22px; }
+  .icono { font-size: 44px; margin-bottom: 10px; }
+  h1 { font-size: 20px; margin: 0 0 10px; }
+  p { color: var(--suave); font-size: 15px; line-height: 1.5; margin: 0 0 16px; }
+  p b { color: var(--texto); }
+  label { display: block; text-align: left; font-size: 11px; letter-spacing: 2px; color: var(--suave);
+          font-weight: 700; margin: 12px 0 6px; }
+  input { width: 100%; padding: 13px 14px; border-radius: 12px; border: 1px solid #2a2a2a; background: #000;
+          color: #fff; font-size: 16px; outline: none; }
+  input:focus { border-color: var(--verde); }
+  button { width: 100%; margin-top: 18px; padding: 14px; border: 0; border-radius: 14px; background: var(--verde);
+           color: #000; font-weight: 900; font-size: 15px; letter-spacing: 1px; cursor: pointer; }
+  button:disabled { opacity: .45; cursor: default; }
+  .msg { margin-top: 14px; font-size: 14px; min-height: 1em; }
+  .msg.ok { color: var(--verde); } .msg.err { color: var(--error); }
+  .reglas { text-align: left; font-size: 12px; color: var(--suave); margin: 8px 0 0; padding-left: 18px; }
+  .reglas li.si { color: var(--verde); }
+  .oculto { display: none; }
+  .ver { background: none; color: var(--verde); width: auto; margin: 6px 0 0; padding: 0; font-size: 12px; letter-spacing: 0; }
+  .tiendas { margin-top: 6px; display: flex; flex-direction: column; gap: 10px; }
+  .tienda { display: block; padding: 13px; border-radius: 14px; border: 1px solid var(--verde); color: var(--verde);
+            text-decoration: none; font-weight: 800; font-size: 14px; letter-spacing: .5px; }
+  .chico { font-size: 12px; color: #7f8a7f; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="caja">
+  <p class="marca">Kike's Garage</p>
+  <p class="sub">CARE BIKE SERVICE</p>
+
+  <div id="cargando"><p>Un momento…</p></div>
+
+  <!-- Invitación por WhatsApp: mail + contraseña -->
+  <div id="activar" class="oculto">
+    <div class="icono">🏍️</div>
+    <h1 id="saludo">¡Hola! Activá tu cuenta</h1>
+    <p>El taller ya armó la ficha de tu moto. Elegí con qué mail y contraseña vas a entrar a la app.</p>
+    <label for="mail">TU MAIL</label>
+    <input id="mail" type="email" autocomplete="email" placeholder="tu@email.com">
+    <label for="p1">CONTRASEÑA</label>
+    <input id="p1" type="password" autocomplete="new-password">
+    <ul class="reglas" id="reglas">
+      <li data-r="largo">Al menos 8 caracteres</li>
+      <li data-r="may">Una mayúscula</li>
+      <li data-r="min">Una minúscula</li>
+      <li data-r="num">Un número</li>
+    </ul>
+    <label for="p2">REPETIR CONTRASEÑA</label>
+    <input id="p2" type="password" autocomplete="new-password">
+    <button type="button" class="ver" id="ver">Mostrar contraseñas</button>
+    <button id="btnActivar">ACTIVAR MI CUENTA</button>
+    <div id="msgActivar" class="msg"></div>
+  </div>
+
+  <!-- Invitación por mail: solo la contraseña -->
+  <div id="clave" class="oculto">
+    <div class="icono">🔑</div>
+    <h1>Creá tu contraseña</h1>
+    <p>Con tu mail y esta contraseña vas a entrar a la app de Kike's Garage.</p>
+    <label for="c1">CONTRASEÑA</label>
+    <input id="c1" type="password" autocomplete="new-password">
+    <ul class="reglas" id="reglas2">
+      <li data-r="largo">Al menos 8 caracteres</li>
+      <li data-r="may">Una mayúscula</li>
+      <li data-r="min">Una minúscula</li>
+      <li data-r="num">Un número</li>
+    </ul>
+    <label for="c2">REPETIR CONTRASEÑA</label>
+    <input id="c2" type="password" autocomplete="new-password">
+    <button type="button" class="ver" id="ver2">Mostrar contraseñas</button>
+    <button id="btnClave">GUARDAR CONTRASEÑA</button>
+    <div id="msgClave" class="msg"></div>
+  </div>
+
+  <div id="listo" class="oculto">
+    <div class="icono">✅</div>
+    <h1 id="listoTitulo">¡Listo!</h1>
+    <p id="listoTexto"></p>
+    <div id="bajar" class="oculto">
+      <p style="margin-bottom:8px"><b>Descargá la app</b></p>
+      <div class="tiendas" id="tiendas"></div>
+      <p class="chico">Si ya tenés la app, abrila y tocá Entrar.</p>
+    </div>
+  </div>
+
+  <div id="error" class="oculto">
+    <div class="icono">⚠️</div>
+    <h1 id="errorTitulo">No se pudo abrir la invitación</h1>
+    <p id="errorTexto"></p>
+  </div>
+</div>
+<script>
+  var SB = "https://toowioyubjlryotghnng.supabase.co";
+  var KEY = "sb_publishable_d3nlV9svx3oO--jWKkGnLQ_kqk0iOIE";
+  var FN = SB + "/functions/v1/activar-invitacion";
+
+  function $(id) { return document.getElementById(id); }
+  function mostrar(id) {
+    ["cargando", "activar", "clave", "listo", "error"].forEach(function (x) {
+      $(x).classList.toggle("oculto", x !== id);
+    });
+  }
+  function aviso(id, texto, ok) { var el = $(id); el.textContent = texto || ""; el.className = "msg " + (ok ? "ok" : "err"); }
+  function error(titulo, texto) { $("errorTitulo").textContent = titulo; $("errorTexto").textContent = texto || ""; mostrar("error"); }
+  function guardado(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); if (v === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { return null; } }
+
+  // ── Qué trae el link ──
+  // WhatsApp:  …/i#K7QF29XDMP4H   (el código)
+  // Mail:      …/i#access_token=…&type=invite  (o type=recovery)
+  // Error:     …/i#error=…&error_code=otp_expired
+  var crudo = location.hash.replace(/^#/, "");
+  var datos = {};
+  if (crudo.indexOf("=") >= 0) {
+    crudo.split("&").forEach(function (kv) {
+      var i = kv.indexOf("="); if (i < 0) return;
+      datos[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, " "));
+    });
+  }
+  var codigo = crudo && crudo.indexOf("=") < 0 ? crudo.toUpperCase().replace(/[^A-Z0-9]/g, "") : "";
+  if (codigo) guardado("kg_inv", codigo); else if (!crudo) codigo = guardado("kg_inv") || "";
+  // No dejar el código a la vista en la barra de direcciones.
+  if (location.hash) history.replaceState(null, "", location.pathname);
+
+  async function llamar(cuerpo) {
+    var r = await fetch(FN, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cuerpo) });
+    var j = {}; try { j = await r.json(); } catch (e) {}
+    return { ok: r.ok && j.ok, status: r.status, j: j };
+  }
+
+  function esIphone() { return /iPhone|iPad|iPod/i.test(navigator.userAgent); }
+  function mostrarTiendas(l) {
+    l = l || {};
+    var t = $("tiendas"); t.innerHTML = "";
+    var lista = [];
+    if (l.android) lista.push({ txt: "GOOGLE PLAY (ANDROID)", url: l.android });
+    if (l.iphone) lista.push({ txt: "APP STORE (IPHONE)", url: l.iphone });
+    if (esIphone()) lista.reverse();
+    lista.forEach(function (x) {
+      var a = document.createElement("a");
+      a.className = "tienda"; a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = x.txt;
+      t.appendChild(a);
+    });
+    $("bajar").classList.toggle("oculto", lista.length === 0);
+  }
+
+  function reglas(p) { return { largo: p.length >= 8, may: /[A-Z]/.test(p), min: /[a-z]/.test(p), num: /[0-9]/.test(p) }; }
+  function claveOk(p) { var r = reglas(p); return r.largo && r.may && r.min && r.num; }
+  function conectarReglas(input, lista) {
+    $(input).addEventListener("input", function () {
+      var r = reglas(this.value);
+      document.querySelectorAll("#" + lista + " li").forEach(function (li) { li.classList.toggle("si", r[li.dataset.r]); });
+    });
+  }
+  function conectarVer(boton, a, b) {
+    $(boton).addEventListener("click", function () {
+      var ver = $(a).type === "password";
+      $(a).type = $(b).type = ver ? "text" : "password";
+      this.textContent = ver ? "Ocultar contraseñas" : "Mostrar contraseñas";
+    });
+  }
+  conectarReglas("p1", "reglas"); conectarReglas("c1", "reglas2");
+  conectarVer("ver", "p1", "p2"); conectarVer("ver2", "c1", "c2");
+  function mailValido(m) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m); }
+
+  var token = null;
+
+  // ── Arranque ──
+  (async function () {
+    try {
+      if (datos.error || datos.error_code) {
+        return error("Este link venció o ya se usó",
+          "Pedile al taller que te mande la invitación de nuevo. El link del mail vale 3 horas y se usa una sola vez.");
+      }
+      if (datos.access_token && (datos.type === "invite" || datos.type === "recovery")) {
+        token = datos.access_token;
+        return mostrar("clave");
+      }
+      if (!codigo) {
+        return error("Falta el código de la invitación", "Abrí el link completo que te mandó el taller por WhatsApp.");
+      }
+      var res = await llamar({ accion: "ver", codigo: codigo });
+      if (!res.ok) {
+        if (res.j.codigo === "usada") guardado("kg_inv", null);
+        return error("No se pudo abrir la invitación", res.j.error || "Revisá tu conexión e intentá de nuevo.");
+      }
+      if (res.j.nombre) $("saludo").textContent = "¡Hola " + res.j.nombre + "! Activá tu cuenta";
+      mostrar("activar");
+    } catch (e) {
+      error("Sin conexión", "Revisá internet y volvé a abrir el link.");
+    }
+  })();
+
+  // ── WhatsApp: activar con mail + contraseña ──
+  $("btnActivar").addEventListener("click", async function () {
+    var mail = $("mail").value.trim().toLowerCase(), p1 = $("p1").value, p2 = $("p2").value;
+    if (!mailValido(mail)) return aviso("msgActivar", "Escribí tu mail.");
+    if (!claveOk(p1)) return aviso("msgActivar", "La contraseña tiene que cumplir las 4 condiciones.");
+    if (p1 !== p2) return aviso("msgActivar", "Las dos contraseñas no coinciden.");
+    var btn = this; btn.disabled = true; aviso("msgActivar", "");
+    try {
+      var res = await llamar({ accion: "activar", codigo: codigo, email: mail, password: p1 });
+      if (!res.ok) {
+        var final = ["usada", "vencida", "reemplazada", "invalido", "limite"].indexOf(res.j.codigo) >= 0;
+        if (final) return error("No se pudo activar", res.j.error || "");
+        aviso("msgActivar", res.j.error || "No se pudo activar. Intentá de nuevo."); btn.disabled = false;
+        return;
+      }
+      guardado("kg_inv", null);
+      $("p1").value = $("p2").value = "";
+      $("listoTitulo").textContent = "¡Tu cuenta quedó activada!";
+      if (res.j.confirmar && res.j.mail_enviado) {
+        $("listoTexto").innerHTML = "";
+        $("listoTexto").append("Te mandamos un mail a ", Object.assign(document.createElement("b"), { textContent: res.j.email }),
+          ". Tocá el botón del mail para confirmarlo y después entrá a la app con tu mail y tu contraseña. Si no lo ves, revisá spam.");
+      } else if (res.j.confirmar) {
+        $("listoTexto").textContent = "Falta confirmar tu mail: abrí la app, entrá con tu mail y tu contraseña, y tocá «Reenviar mail» para que te llegue el de confirmación.";
+      } else {
+        $("listoTexto").textContent = "Ya podés entrar a la app con tu mail y tu contraseña.";
+      }
+      mostrarTiendas(res.j.links);
+      mostrar("listo");
+    } catch (e) {
+      aviso("msgActivar", "Sin conexión. Revisá internet e intentá de nuevo."); btn.disabled = false;
+    }
+  });
+
+  // ── Mail: crear la contraseña ──
+  $("btnClave").addEventListener("click", async function () {
+    var p1 = $("c1").value, p2 = $("c2").value;
+    if (!claveOk(p1)) return aviso("msgClave", "La contraseña tiene que cumplir las 4 condiciones.");
+    if (p1 !== p2) return aviso("msgClave", "Las dos contraseñas no coinciden.");
+    var btn = this; btn.disabled = true; aviso("msgClave", "");
+    try {
+      var r = await fetch(SB + "/auth/v1/user", {
+        method: "PUT",
+        headers: { "apikey": KEY, "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+        body: JSON.stringify({ password: p1 }),
+      });
+      var j = {}; try { j = await r.json(); } catch (e) {}
+      if (!r.ok) {
+        var m = String(j.msg || j.message || j.error_description || "");
+        if (r.status === 401 || r.status === 403 || /expired|jwt|session/i.test(m))
+          return error("Este link venció", "Pedile al taller que te mande la invitación de nuevo.");
+        if (/password/i.test(m)) aviso("msgClave", "La contraseña es muy débil: usá al menos 8 caracteres, con mayúscula, minúscula y número.");
+        else aviso("msgClave", "No se pudo guardar. Intentá de nuevo.");
+        btn.disabled = false; return;
+      }
+      // Cierra la sesión de este navegador (la app no se ve afectada).
+      try { await fetch(SB + "/auth/v1/logout?scope=local", { method: "POST", headers: { "apikey": KEY, "Authorization": "Bearer " + token } }); } catch (e) {}
+      token = null; $("c1").value = $("c2").value = "";
+      $("listoTitulo").textContent = "¡Tu cuenta quedó lista!";
+      $("listoTexto").textContent = "Ya podés entrar a la app de Kike's Garage con tu mail y esta contraseña.";
+      try { var l = await llamar({ accion: "links" }); mostrarTiendas(l.j.links); } catch (e) {}
+      mostrar("listo");
+    } catch (e) {
+      aviso("msgClave", "Sin conexión. Revisá internet e intentá de nuevo."); btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
